@@ -1,0 +1,120 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- <button mat-stroked-button class="btn" *ngIf="!placeFindBtnClicked" (click)="onClickFindPlace(user)">Find Me Places!</button> -->
+<div class="wrap">
+  <button class="button1" *ngIf="!placeFindBtnClicked" (click)="onClickFindPlace(user)">Find Me Places!</button>
+</div>
+<div *ngIf="placeFindBtnClicked">
+
+  <div class="goal-button-row">
+    <button mat-stroked-button class="btngoalall" (click)="filtering('All')">All</button>
+    <button mat-stroked-button class="btngoalattraction" (click)="filtering('Attractions & Leisure')"><i class="fa fa-bicycle" aria-hidden="true"></i> Attractions & Leisure</button>
+    <button mat-stroked-button class="btngoalsport"(click)="filtering('Sport & Extreme')"><i class="fa fa-futbol-o" aria-hidden="true"></i> Sport & Extreme</button>
+    <button mat-stroked-button class="btngoalnight" (click)="filtering('Night Life')"><i class="fa fa-glass" aria-hidden="true"></i> Night Life</button>
+    <button mat-stroked-button class="btngoalculture" (click)="filtering('Culture & Historical Places')"><i class="fa fa-university" aria-hidden="true"></i> Culture & Historical Places</button>
+    <button mat-stroked-button class="btngoalrelax"(click)="filtering('Relaxing')" ><i class="fa fa-bed" aria-hidden="true"></i> Relaxing</button>
+    <button mat-stroked-button class="btngoalshop" (click)="filtering('Shopping')"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Shopping</button>
+    <div>
+  <br>
+  <mat-divider></mat-divider>
+
+<!-- ///////////////////////////////////////////////////// -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+</style>
+<br>
+<br>
+<br>
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/> -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary" id="result_panel">
+           <div class="panel-heading"><h3 class="header">Result List</h3></div>
+             <div class="panel-body">
+                 <ul class="list-group">
+                   <div *ngFor="let place of placesKMEANS">
+                    <app-place-item
+                    [place]="place"
+                    [userLikedPlaces]="user.liked_places_array"
+                    [userUnLikedPlaces]="user.unliked_places_array"
+                    [userSavedPlaces]="user.liked_place"
+                    [chartPercent]="chartMap[place.id]"
+                    [countLikes] = "likeMap[place.id]"
+                    [countUnlikes] = "unlikeMap[place.id]"
+                    (onSavePlace)="onSavePlaceClicked(place)"
+                    (onUnSavePlace)="onUnSavePlaceClicked(place)"
+                    (onLikePlace)="LikeClicked(place)"
+                    (removeLikePlace)="removeLike(place)"
+                    (onUnLikePlace)="UnLikeClicked(place)"
+                    (removeUnLikePlace)="removeUnlike(place)"
+                    (onDeletePlace)="deletePlace(place.id)"
+                   ></app-place-item>
+                   </div>
+                 </ul>
+             </div>
+        </div>
+    </div>
+
+  <!-- //////////////////////////////////////// -->
+  <br>
+  <div class="col-md-4">
+
+  <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
+    <div *ngFor="let place of placesKMEANS">
+    <agm-marker *ngIf="updateMarkerColorByGoal(place)"
+    [latitude]="place.lat"
+    [longitude]="place.lng"
+    (markerClick)="clickedMarker(infoWindow)"
+    [iconUrl] ="
+    {
+      url: colorurl
+    }"
+    >
+
+    <agm-info-window #infoWindow>
+
+        <strong>Place Name:</strong> {{place.name}}
+        <br>
+        <strong> Place Goal: </strong> {{place.goal}}
+        <br>
+        <strong> Stars:</strong> {{place.count_of_likes}}
+        <br>
+        <br>
+
+        <div id="qr" style="display:inline-block; min-width:4.2cm; height:2.8cm; align: center;vertical-align: middle;" >
+          <img src="{{place.photo}}"
+          style ="border-radius: 20px;height: 100px;width:120px; -webkit-filter: drop-shadow(5px 5px 5px #222);">
+
+          </div>
+          <a style="
+          position: absolute;bottom: 35px;  right: 15px;" class="abutton"  *ngIf="linkPlace(place.name)" href="{{placeurl}}" target="_blank"><i class="fa fa-search search" aria-hidden="true"></i></a>
+          <a style="position: absolute;top: 70px;  right: 15px;" class="abutton" *ngIf="!ifUserSaveThisPlace(place.id)" (click)="onSavePlaceClicked(place)" aria-disabled="true"><i class="fa fa-star-o save" aria-hidden="true"></i></a>
+          <a style="position: absolute;top: 70px;  right: 15px;" class="abutton" *ngIf="ifUserSaveThisPlace(place.id)" (click)="onUnSavePlaceClicked(place)"><i class="fa fa-star unsave" aria-hidden="true"></i></a>
+          <br>
+
+           </agm-info-window>
+
+    </agm-marker>
+    </div>
+  </agm-map>
+</div>
+
+  </div>
+
+</div>
+</div>
+
+<br>
+<br>
+<button mat-stroked-button class="btn1" (click)="onClickFindPlace(user)">Find Again!</button>
+

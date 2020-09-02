@@ -1,0 +1,52 @@
+mat-form-field,
+textarea {
+  width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+.image-preview {
+  height: 5rem;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  height: 100%;
+}
+
+.abutton {
+  width: 141px;
+  background: rgb(85, 221, 226);
+  padding: 4px;
+  text-align: center;
+  /* border-radius: 6px; */
+  font-weight: bold;
+  cursor: pointer;
+
+}
+
+.centerimg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin: center;
+  width: 90%;
+}
+
+.mat-card{
+  left: 32%;
+  width:35%;
+  background: white;
+}
+
+.add{
+  cursor: pointer;
+  color: blue;
+}

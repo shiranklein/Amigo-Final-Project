@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="routes.length > 0 && !isLoading">
+  <br>
+  <a routerLink="/routecreate">Add New Route <i class="fa fa-plus" aria-hidden="true"></i></a>
+  <br>
+  <br>
+  <mat-expansion-panel *ngFor="let route of routes">
+    <mat-expansion-panel-header>
+      <a class="title"><b>{{ route.name }}</b></a>
+    </mat-expansion-panel-header>
+
+    <div *ngIf="routePlaces(route.places)">
+      <p *ngFor="let placeData of placesListStringArray">
+        <label *ngIf="ifPlaceName(placeData);">
+          <b>Place {{ countPlaces }}:</b> {{ placeData.substring(5) }}
+        </label>
+      </p>
+    </div>
+
+    <!-- Map -->
+    <div>
+    <!-- <div *ngIf="createRoute()"> -->
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <agm-direction *ngFor="let dir of directions"
+        [origin]="dir.origin"
+        [destination]="dir.destination"
+        [waypoints]="waypoints"
+        >
+      </agm-direction>
+      <div *ngFor="let place of places">
+        <agm-marker *ngIf="checkPlaceGoal(place) && checkPlace(place.name)"
+          [latitude]="place.lat"
+          [longitude]="place.lng"
+          (markerClick)="clickedMarker(infoWindow)"
+          [iconUrl] = colorurl
+          >
+        <agm-info-window #infoWindow>
+              {{ place.id }}
+              <br>
+              {{ place.name }}
+              <br>
+              {{ place.goal }}
+              <br>
+        </agm-info-window>
+        </agm-marker>
+      </div>
+    </agm-map>
+    </div>
+
+    <mat-action-row *ngIf="userIsAuthenticated && userId === route.creator">
+      <button mat-button color="warn" (click)="onDelete(route.id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator [length]="totalRoutes" [pageSize]="routesPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+  *ngIf="routes.length > 0"></mat-paginator>
+<p class="info-text mat-body-1" *ngIf="routes.length <= 0 && !isLoading">No routes added yet!</p>

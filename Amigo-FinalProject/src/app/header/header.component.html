@@ -1,0 +1,40 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<mat-toolbar>
+  <span>
+    <a routerLink="/"><img src="assets/images/AMIGO.png" width="180" alt="image"></a>
+    <!-- <a routerLink="/" class="title"><i class="fa fa-globe" aria-hidden="true" style="color: rgb(85, 221, 226);"></i> A M I G O </a> -->
+  </span>
+  <span class="spacer">
+  <ul>
+    <li *ngIf="userIsAuthenticated">
+      <a class="but" mat-button routerLink="/top10places" routerLinkActive="active"> Top-10 </a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a class="but" mat-button routerLink="/findmeplace" routerLinkActive="active"> Find Me Places </a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a class="but" mat-button routerLink="/placelist" routerLinkActive="active"> Our Places </a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a class="but" mat-button routerLink="/routelist" routerLinkActive="active"> Routes </a>
+    </li>
+  </ul>
+  </span>
+  <span class="spacer"></span>
+  <ul>
+    <li *ngIf="!userIsAuthenticated">
+      <a class="but" mat-button routerLink="/auth/login" routerLinkActive="active"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+    </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a class="but" mat-button routerLink="/auth/signup" routerLinkActive="active"><i class="fa fa-user-plus" aria-hidden="true"></i> Signup</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a class="but" mat-button routerLink="/auth/myaccount" routerLinkActive="active"><i class="fa fa-user-circle-o" aria-hidden="true"></i> My Account</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <button class="but" mat-button (click)="onLogout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+    </li>
+  </ul>
+
+</mat-toolbar>
